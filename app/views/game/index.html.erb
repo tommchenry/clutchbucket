@@ -10,6 +10,7 @@ GameState.prototype.preload = function() {
   game.load.image('player', 'images/player.png');
   game.load.image('basket', 'images/basket.png');
   game.load.image('ball', 'images/ball.png')
+  game.load.image('floor', 'images/floor.png')
   // game.load.image('ground', 'images/platform.png');
   // game.load.image('star', 'images/star.png');
   // game.load.spritesheet('dude', 'images/dude.png', 32, 48);
@@ -37,7 +38,10 @@ GameState.prototype.create = function() {
 
   // // Here we create the ground.
   // var ground = platforms.create(0, game.world.height - 64, 'ground');
-
+  floor = game.add.sprite(0, game.world.height-50, 'floor');
+  game.physics.arcade.enable(floor);
+  floor.enableBody = true;
+  floor.body.immovable = true;
   // //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
   // ground.scale.setTo(2, 2);
   this.BALL_SPEED = -400;
@@ -54,7 +58,7 @@ GameState.prototype.create = function() {
   // ledge.body.immovable = true;
 
   //  // The player and its settings
-  player = game.add.sprite(32, game.world.height - 300, 'player');
+  player = game.add.sprite(32, 70, 'player');
 
   // //  We need to enable physics on the player
   game.physics.arcade.enable(player);
@@ -104,7 +108,7 @@ GameState.prototype.create = function() {
 
 GameState.prototype.update = function() {
   //  Collide the player and the stars with the platforms
-  // game.physics.arcade.collide(player, platforms);
+  game.physics.arcade.collide(player, floor);
 
   //   //  Reset the players velocity (movement)
   player.body.velocity.x = 0;
